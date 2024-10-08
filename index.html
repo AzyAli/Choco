@@ -1,0 +1,72 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="./resources/ol.css">
+        <link rel="stylesheet" href="resources/fontawesome-all.min.css">
+        <link rel="stylesheet" type="text/css" href="resources/horsey.min.css">
+        <link rel="stylesheet" type="text/css" href="resources/ol3-search-layer.min.css">
+        <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
+        <link rel="stylesheet" href="./resources/qgis2web.css">
+        <style>
+        html, body {
+            background-color: #ffffff;
+        }
+        .ol-control > * {
+            background-color: #aff8b0!important;
+            color: #124400!important;
+            border-radius: 0px;
+        }
+        .ol-attribution a, .gcd-gl-input::placeholder, .search-layer-input-search::placeholder {
+            color: #124400!important;
+        }
+        .search-layer-input-search {
+            background-color: #aff8b0!important;
+        }
+        .ol-control > *:focus, .ol-control >*:hover {
+            background-color: rgba(175, 248, 176, 0.7)!important;
+        } 
+        .ol-control {
+            background-color: rgba(255,255,255,.4) !important;
+            padding: 2px !important;
+        } 
+        </style>
+
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+            <div id="popup" class="ol-popup">
+                <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                <div id="popup-content"></div>
+            </div>
+        </div>
+        <script src="resources/qgis2web_expressions.js"></script>
+<script src="resources/proj4.js"></script>
+        <script>proj4.defs('EPSG:4326','+proj=longlat +datum=WGS84 +no_defs');</script>
+        <script src="resources/polyfills.js"></script>
+        <script src="./resources/functions.js"></script>
+        <script src="./resources/ol.js"></script>
+        <script src="http://cdn.polyfill.io/v2/polyfill.min.js?features=Element.prototype.classList,URL"></script>
+        <script src="resources/horsey.min.js"></script>
+        <script src="resources/ol3-search-layer.js"></script>
+        <script src="./resources/ol-layerswitcher.js"></script>
+        <script src="layers/Terrestrial_ecoregions_6.js"></script><script src="layers/Ecuador_7.js"></script><script src="layers/Potentialwildlifecorridors_8.js"></script><script src="layers/Rivers_9.js"></script><script src="layers/MiningCONCESIONES1_10.js"></script><script src="layers/MiningCONCESIONESN_11.js"></script><script src="layers/MiningCONCESIONESS_12.js"></script><script src="layers/Communities_13.js"></script><script src="layers/indigenousreserves_14.js"></script><script src="layers/Acusmit_15.js"></script><script src="layers/BOSQUESPROTECTORES_16.js"></script><script src="layers/CotocachiCayapasEcologicalReserve_17.js"></script><script src="layers/MacheChindul_18.js"></script><script src="layers/Reserva_Biosfera_Choco_19.js"></script><script src="layers/ChachiReserves_20.js"></script><script src="layers/JocotocoCanande_21.js"></script><script src="layers/Maquipucuna_22.js"></script><script src="layers/LosCedrosReserve_23.js"></script><script src="layers/MaquipucunaReserve_24.js"></script><script src="layers/NeblinaReserve_25.js"></script><script src="layers/Ecominga_26.js"></script><script src="layers/TesoroEscondidoReserve_27.js"></script><script src="layers/TMAPATADEPATAJO_28.js"></script><script src="layers/TMAJAMACOAQUE_29.js"></script><script src="layers/FCATBilsa_30.js"></script><script src="layers/FCATReserve_31.js"></script><script src="layers/LA_ESPERANZA_32.js"></script><script src="layers/DRACULA_ZONA_ALTA_33.js"></script><script src="layers/DRACULA_ZONA_BAJA_34.js"></script><script src="layers/DRACULA_ZONA_MEDIA_35.js"></script><script src="layers/Cuellaje_reservas_36.js"></script><script src="layers/Apuela_reservas_37.js"></script><script src="layers/Penaherrera_reservas_38.js"></script><script src="layers/GarciaMoreno_reservas_39.js"></script><script src="layers/VacasGalindo_reservas_40.js"></script>
+        <script src="styles/Terrestrial_ecoregions_6_style.js"></script><script src="styles/Ecuador_7_style.js"></script><script src="styles/Potentialwildlifecorridors_8_style.js"></script><script src="styles/Rivers_9_style.js"></script><script src="styles/MiningCONCESIONES1_10_style.js"></script><script src="styles/MiningCONCESIONESN_11_style.js"></script><script src="styles/MiningCONCESIONESS_12_style.js"></script><script src="styles/Communities_13_style.js"></script><script src="styles/indigenousreserves_14_style.js"></script><script src="styles/Acusmit_15_style.js"></script><script src="styles/BOSQUESPROTECTORES_16_style.js"></script><script src="styles/CotocachiCayapasEcologicalReserve_17_style.js"></script><script src="styles/MacheChindul_18_style.js"></script><script src="styles/Reserva_Biosfera_Choco_19_style.js"></script><script src="styles/ChachiReserves_20_style.js"></script><script src="styles/JocotocoCanande_21_style.js"></script><script src="styles/Maquipucuna_22_style.js"></script><script src="styles/LosCedrosReserve_23_style.js"></script><script src="styles/MaquipucunaReserve_24_style.js"></script><script src="styles/NeblinaReserve_25_style.js"></script><script src="styles/Ecominga_26_style.js"></script><script src="styles/TesoroEscondidoReserve_27_style.js"></script><script src="styles/TMAPATADEPATAJO_28_style.js"></script><script src="styles/TMAJAMACOAQUE_29_style.js"></script><script src="styles/FCATBilsa_30_style.js"></script><script src="styles/FCATReserve_31_style.js"></script><script src="styles/LA_ESPERANZA_32_style.js"></script><script src="styles/DRACULA_ZONA_ALTA_33_style.js"></script><script src="styles/DRACULA_ZONA_BAJA_34_style.js"></script><script src="styles/DRACULA_ZONA_MEDIA_35_style.js"></script><script src="styles/Cuellaje_reservas_36_style.js"></script><script src="styles/Apuela_reservas_37_style.js"></script><script src="styles/Penaherrera_reservas_38_style.js"></script><script src="styles/GarciaMoreno_reservas_39_style.js"></script><script src="styles/VacasGalindo_reservas_40_style.js"></script>
+        <script src="./layers/layers.js" type="text/javascript"></script> 
+        <script src="./resources/Autolinker.min.js"></script>
+        <script src="./resources/qgis2web.js"></script>
+    </body>
+</html>
