@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="size-mode-LARGE esriLtr jimu-ltr en" dir="ltr" style="--vh:20.41px;--vw:19.2px;">
+<html lang="en" class="size-mode-LARGE jimu-ltr en" dir="ltr" style="--vh:20.41px;--vw:19.2px;">
 <!-- Page saved with SingleFile 
  url: https://localhost:3001/experience/0/?draft=true 
  saved date: Tue Dec 10 2024 15:39:24 GMT+0100 (Central European Standard Time) -->
@@ -86,19 +86,15 @@
     </style>
 </head>
 <body>
-    <div id="map">
-        <div id="popup" class="ol-popup">
-            <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-            <div id="popup-content"></div>
-        </div>
-    </div>
+    <div id="loading"></div>
+    <div id="app"></div>
     <script src="resources/qgis2web_expressions.js"></script>
     <script src="resources/proj4.js"></script>
     <script>proj4.defs('EPSG:4326','+proj=longlat +datum=WGS84 +no_defs');</script>
     <script src="resources/polyfills.js"></script>
     <script src="./resources/functions.js"></script>
     <script src="./resources/ol.js"></script>
-    <script src="http://cdn.polyfill.io/v2/polyfill.min.js?features=Element.prototype.classList,URL"></script>
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=Element.prototype.classList,URL"></script>
     <script src="resources/horsey.min.js"></script>
     <script src="resources/ol3-search-layer.js"></script>
     <script src="./resources/ol-layerswitcher.js"></script>
