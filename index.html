@@ -27,8 +27,6 @@
             position: relative;
             z-index: 0;
         }
-    </style>
-    <style data-emotion="app-root-emotion-cache-ltr-global" data-s>
         *, ::before, ::after {
             box-sizing: border-box;
         }
@@ -56,49 +54,40 @@
             color: inherit;
             text-decoration: none;
         }
-        a:not([href]):not([class]):hover {
-            color: inherit;
-            text-decoration: none;
-        }
-        img {
-            vertical-align: middle;
+        :host button, :host a {
+            --calcite-button-content-margin-internal: 0.5rem;
+            --calcite-button-padding-x-internal: 7px;
+            --calcite-button-padding-y-internal: 3px;
+            padding-block: var(--calcite-button-padding-y-internal);
+            padding-inline: var(--calcite-button-padding-x-internal);
+            position: relative;
+            box-sizing: border-box;
+            display: flex;
+            block-size: 100%;
+            inline-size: 100%;
+            cursor: pointer;
+            user-select: none;
+            appearance: none;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0px;
             border-style: none;
-        }
-        svg {
-            overflow: hidden;
-            vertical-align: middle;
-        }
-        button:focus:not(:focus-visible) {
-            outline: 0px;
-        }
-        input, button {
-            margin: 0px;
+            text-align: center;
             font-family: inherit;
-            font-size: inherit;
-            line-height: inherit;
-        }
-        button {
-            overflow: visible;
-            text-transform: none;
-        }
-        button, [type="button"] {
-            appearance: button;
+            font-weight: var(--calcite-font-weight-normal);
+            text-decoration-line: none;
+            transition: color var(--calcite-animation-timing) ease-in-out, background-color var(--calcite-animation-timing) ease-in-out, box-shadow var(--calcite-animation-timing) ease-in-out, outline-color var(--calcite-internal-animation-timing-fast) ease-in-out;
         }
     </style>
 </head>
 <body>
-    <div id="loading"></div>
     <div id="app"></div>
-    <script src="resources/qgis2web_expressions.js"></script>
-    <script src="resources/proj4.js"></script>
-    <script>proj4.defs('EPSG:4326','+proj=longlat +datum=WGS84 +no_defs');</script>
-    <script src="resources/polyfills.js"></script>
-    <script src="./resources/functions.js"></script>
-    <script src="./resources/ol.js"></script>
+    <script src="resources/functions.js"></script>
+    <script src="resources/ol.js"></script>
     <script src="https://polyfill.io/v3/polyfill.min.js?features=Element.prototype.classList,URL"></script>
     <script src="resources/horsey.min.js"></script>
     <script src="resources/ol3-search-layer.js"></script>
-    <script src="./resources/ol-layerswitcher.js"></script>
+    <script src="resources/ol-layerswitcher.js"></script>
     <script src="layers/Terrestrial_ecoregions_6.js"></script>
     <script src="layers/Ecuador_7.js"></script>
     <script src="layers/Potentialwildlifecorridors_8.js"></script>
@@ -160,14 +149,5 @@
     <script src="styles/TMAJAMACOAQUE_29_style.js"></script>
     <script src="styles/FCATBilsa_30_style.js"></script>
     <script src="styles/FCATReserve_31_style.js"></script>
-    <script src="styles/LA_ESPERANZA_32_style.js"></script>
-    <script src="styles/DRACULA_ZONA_ALTA_33_style.js"></script>
-    <script src="styles/DRACULA_ZONA_BAJA_34_style.js"></script>
-    <script src="styles/DRACULA_ZONA_MEDIA_35_style.js"></script>
-    <script src="styles/Cuellaje_reservas_36_style.js"></script>
-    <script src="styles/Apuela_reservas_37_style.js"></script>
-    <script src="styles/Penaherrera_reservas_38_style.js"></script>
-    <script src="styles/GarciaMoreno_reservas_39_style.js"></script>
-    <script src="styles/VacasGalindo_reservas_40_style.js"></script>
 </body>
 </html>
