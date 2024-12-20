@@ -1,8 +1,5 @@
 <!doctype html>
 <html lang="en" class="size-mode-LARGE jimu-ltr en" dir="ltr" style="--vh:20.41px;--vw:19.2px;">
-<!-- Page saved with SingleFile 
- url: https://localhost:3001/experience/0/?draft=true 
- saved date: Tue Dec 10 2024 15:39:24 GMT+0100 (Central European Standard Time) -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
@@ -10,7 +7,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="google-site-verification" content="Gl928UcZRBt8t7njrpXivrsVrbVcc7sLybtCMZ6Dzlg">
-    <title>Choco Alliance Dev</title>
+    <title>The Chocó Alliance Web Map</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="stylesheet" href="./resources/ol.css">
     <link rel="stylesheet" href="resources/fontawesome-all.min.css">
@@ -24,213 +21,127 @@
             height: 100%;
             margin: 0;
             overflow: hidden;
+            background-color: #ffffff;
         }
-        #loading {
-            width: 100vw;
-            height: 100vh;
-        }
-        #app {
+        #frame {
+            display: flex;
+            flex-direction: column;
             width: 100%;
             height: 100%;
             position: relative;
-            z-index: 0;
-        }
-        *, ::before, ::after {
             box-sizing: border-box;
         }
-        html {
-            -webkit-tap-highlight-color: rgba(0,0,0,0);
-        }
-        body {
-            text-align: left;
-        }
-        [tabindex="-1"]:focus:not(:focus-visible) {
-            outline: 0px !important;
-        }
-        p {
-            margin-top: 0px;
-            margin-bottom: 1rem;
-        }
-        ul {
-            margin-top: 0px;
-            margin-bottom: 1rem;
-        }
-        ul ul {
-            margin-bottom: 0px;
-        }
-        a:not([href]):not([class]) {
-            color: inherit;
-            text-decoration: none;
-        }
-        a:not([href]):not([class]):hover {
-            color: inherit;
-            text-decoration: none;
-        }
-        img {
-            vertical-align: middle;
-            border-style: none;
-        }
-        svg {
-            overflow: hidden;
-            vertical-align: middle;
-        }
-        button:focus:not(:focus-visible) {
-            outline: 0px;
-        }
-        input, button {
-            margin: 0px;
-            font-family: inherit;
-            font-size: inherit;
-            line-height: inherit;
-        }
-        button {
-            overflow: visible;
-            text-transform: none;
-        }
-        button, [type="button"] {
-            appearance: button;
-        }
-        button:not(:disabled), [type="button"]:not(:disabled), [type="reset"]:not(:disabled), [type="submit"]:not(:disabled) {
-            cursor: pointer;
-        }
-        ::-webkit-file-upload-button {
-            font: inherit;
-            appearance: button;
-        }
-        template {
-            display: none;
-        }
-        .d-inline-block {
-            display: inline-block !important;
-        }
-        .d-flex {
-            display: flex !important;
-        }
-        .flex-column {
-            flex-direction: column !important;
-        }
-        .flex-grow-1 {
-            flex-grow: 1 !important;
-        }
-        .flex-shrink-0 {
-            flex-shrink: 0 !important;
-        }
-        .justify-content-between {
-            justify-content: space-between !important;
-        }
-        .align-items-end {
-            align-items: flex-end !important;
-        }
-        .align-items-center {
-            align-items: center !important;
-        }
-        .position-relative {
-            position: relative !important;
-        }
-        .sticky-top {
-            position: sticky;
-            top: 0px;
-            z-index: 1020;
-        }
-        .sr-only {
-            position: absolute !important;
-            width: 1px !important;
-            height: 1px !important;
-            padding: 0px !important;
-            margin: -1px !important;
-            overflow: hidden !important;
-            clip: rect(0px, 0px, 0px, 0px) !important;
-            white-space: nowrap !important;
-            border: 0px !important;
-        }
-        .w-100 {
-            width: 100% !important;
-        }
-        .h-100 {
-            height: 100% !important;
-        }
-        .text-truncate {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-        .text-center {
-            text-align: center !important;
-        }
-        :host button, :host a {
-            --calcite-button-content-margin-internal: 0.5rem;
-            --calcite-button-padding-x-internal: 7px;
-            --calcite-button-padding-y-internal: 3px;
-            padding-block: var(--calcite-button-padding-y-internal);
-            padding-inline: var(--calcite-button-padding-x-internal);
-            position: relative;
-            box-sizing: border-box;
+        .header {
+            width: 100%;
+            height: 80px; /* Make the top frame bar 80px thick */
+            background-color: #124400; /* Dark green color */
+            color: white;
             display: flex;
-            block-size: 100%;
-            inline-size: 100%;
-            cursor: pointer;
-            user-select: none;
-            appearance: none;
             align-items: center;
             justify-content: center;
-            border-radius: 0px;
-            border-style: none;
-            text-align: center;
-            font-family: inherit;
-            font-weight: var(--calcite-font-weight-normal);
-            text-decoration-line: none;
-            transition: color var(--calcite-animation-timing) ease-in-out, background-color var(--calcite-animation-timing) ease-in-out, box-shadow var(--calcite-animation-timing) ease-in-out, outline-color var(--calcite-internal-animation-timing-fast) ease-in-out;
+            font-size: 24px;
+            position: absolute;
+            top: 0; /* Align the header to the top */
+            left: 0;
         }
-        .ol-control > * {
-            background-color: #aff8b0!important;
-            color: #124400!important;
-            border-radius: 0px;
-        }
-        .ol-attribution a, .gcd-gl-input::placeholder, .search-layer-input-search::placeholder {
-            color: #124400!important;
-        }
-        .search-layer-input-search {
-            background-color: #aff8b0!important;
-        }
-        .ol-control > *:focus, .ol-control >*:hover {
-            background-color: rgba(175, 248, 176, 0.7)!important;
-        } 
-        .ol-control {
-            background-color: rgba(255,255,255,.4) !important;
-            padding: 2px !important;
-        } 
-        html, body, #map {
+        .bottom-widgets {
             width: 100%;
-            height: 100%;
-            padding: 0;
-            margin: 0;
+            height: 25px; /* Make the bottom frame bar 20px thick */
+            background-color: #124400; /* Dark green color */
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            position: absolute;
+            bottom: 0; /* Align the bottom widgets to the bottom */
+            left: 0;
         }
-        .button {
-            background-color: #aff8b0;
-            color: #124400;
-            border-radius: 0px;
-            padding: 10px;
-            margin: 5px;
-            cursor: pointer;
+        .header .logo {
+            position: absolute;
+            top: 5px;
+            left: 5px;
         }
-        .button:hover {
-            background-color: rgba(175, 248, 176, 0.7);
+        #left-widgets {
+            width: 50px; /* Ensure the width is consistent with the height of top and bottom containers */
+            background-color: #124400; /* Match the dark green color */
+            position: absolute;
+            top: 75px; /* Align to the bottom of the header */
+            bottom: 20px; /* Align to the top of the bottom widgets */
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            padding-top: 10px; /* Add padding to separate from top frame */
+        }
+        .widget {
+            width: 50px;
+            height: 50px;
+            background-color: white;
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 2px 0; /* Add margin to create spacing between widgets */
+        }
+        #map {
+            flex-grow: 1;
+            margin-left: 50px; /* Ensure it does not overlap with the left widgets */
+            margin-top: 80px; /* Ensure it does not overlap with the header */
+            margin-bottom: 20px; /* Ensure it does not overlap with the bottom widgets */
+            position: absolute;
+            top: 80px; /* Align to the bottom of the header */
+            bottom: 20px; /* Align to the top of the bottom widgets */
+            right: 0; /* Stretch to the right edge of the screen */
+            left: 50px; /* Align with the left widgets */
+        }
+        .created-by {
+            font-size: 12px; /* Make the text smaller */
+        }
+        .created-by a {
+            color: white;
+            text-decoration: none;
         }
     </style>
 </head>
 <body>
-    <div id="app">
-        <!-- Your content here -->
+    <div id="frame">
+        <div class="header">
+            <a href="https://your-hyperlink.com" class="logo">
+                <img src="Logo-Stacked.png" alt="Logo" height="60" />
+            </a>
+            The Chocó Alliance Web Map
+        </div>
+        <div id="left-widgets">
+            <div class="widget">1</div>
+            <div class="widget">2</div>
+            <div class="widget">3</div>
+            <div class="widget">4</div>
+            <div class="widget">5</div>
+        </div>
+        <div id="map">
+            <div id="popup" class="ol-popup">
+                <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                <div id="popup-content"></div>
+            </div>
+        </div>
+        <div class="bottom-widgets">
+            <div class="created-by">
+                <a href="#link1">Created by AzyAli</a>
+            </div>
+        </div>
     </div>
     <script src="resources/qgis2web_expressions.js"></script>
     <script src="resources/proj4.js"></script>
     <script>proj4.defs('EPSG:4326','+proj=longlat +datum=WGS84 +no_defs');</script>
     <script src="resources/polyfills.js"></script>
-    <script src="resources/functions.js"></script>
-    <script src="resources/ol.js"></script>
+    <script src="./resources/functions.js"></script>
+    <script src="./resources/ol.js"></script>
+    <script src="http://cdn.polyfill.io/v2/polyfill.min.js?features=Element.prototype.classList,URL"></script>
     <script src="resources/horsey.min.js"></script>
     <script src="resources/ol3-search-layer.js"></script>
-    <script src="resources/ol-layerswitcher.js"></script>
+    <script src="./resources/ol-layerswitcher.js"></script>
     <script src="layers/Terrestrial_ecoregions_6.js"></script>
     <script src="layers/Ecuador_7.js"></script>
     <script src="layers/Potentialwildlifecorridors_8.js"></script>
