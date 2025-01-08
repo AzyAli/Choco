@@ -1,66 +1,75 @@
 <!doctype html>
-<html lang="en" class="size-mode-LARGE jimu-ltr en" dir="ltr">
+<html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="google-site-verification" content="Gl928UcZRBt8t7njrpXivrsVrbVcc7sLybtCMZ6Dzlg">
     <title>The Chocó Alliance Web Map</title>
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     
     <!-- External Libraries -->
-    <link rel="stylesheet" href="./resources/ol.css">
+    <link rel="stylesheet" href="resources/ol.css">
     <link rel="stylesheet" href="resources/fontawesome-all.min.css">
     <link rel="stylesheet" href="resources/horsey.min.css">
     <link rel="stylesheet" href="resources/ol3-search-layer.min.css">
-    <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
+    <link rel="stylesheet" href="resources/ol-layerswitcher.css">
     
     <!-- Custom Styles -->
-    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
     <div id="frame">
+        <!-- Header -->
         <div class="header">
-            <a href="https://your-hyperlink.com" class="logo">
-                <img src="Logo-Stacked.png" alt="Logo" height="60" />
+            <a href="#" class="logo">
+                <img src="Logo-Stacked.png" alt="Chocó Alliance Logo" />
             </a>
-            The Chocó Alliance Web Map
+            <div class="header-title">The Chocó Alliance Web Map</div>
+            <div class="search-container">
+                <input type="text" class="search-input" placeholder="Find address or place" />
+            </div>
         </div>
-        <div id="left-widgets">
-            <div class="widget">1</div>
-            <div class="widget">2</div>
-            <div class="widget">3</div>
-            <div class="widget">4</div>
-            <div class="widget">5</div>
+
+        <!-- Side Toolbar -->
+        <div class="side-toolbar">
+            <button class="tool-button" id="zoom-in" title="Zoom In">+</button>
+            <button class="tool-button" id="zoom-out" title="Zoom Out">-</button>
+            <button class="tool-button" id="home" title="Home"><i class="fas fa-home"></i></button>
+            <button class="tool-button" id="layers" title="Layers"><i class="fas fa-layers"></i></button>
+            <button class="tool-button" id="measure" title="Measure"><i class="fas fa-ruler"></i></button>
         </div>
+
+        <!-- Map Container -->
         <div id="map">
             <div id="popup" class="ol-popup">
                 <a href="#" id="popup-closer" class="ol-popup-closer"></a>
                 <div id="popup-content"></div>
             </div>
         </div>
+
+        <!-- Bottom Bar -->
         <div class="bottom-widgets">
-            <div class="created-by">
-                <a href="#link1">Created by AzyAli</a>
-            </div>
-            <div id="scale-line"></div>
-            <div id="mouse-position"></div>
+            <span>Created by AzyAli</span>
+            <span id="coordinates"></span>
+            <span id="scale"></span>
         </div>
     </div>
 
-    <!-- External Libraries -->
+    <!-- Load Scripts -->
     <script src="resources/qgis2web_expressions.js"></script>
     <script src="resources/proj4.js"></script>
     <script>proj4.defs('EPSG:4326','+proj=longlat +datum=WGS84 +no_defs');</script>
     <script src="resources/polyfills.js"></script>
-    <script src="./resources/functions.js"></script>
-    <script src="./resources/ol.js"></script>
+    <script src="resources/functions.js"></script>
+    <script src="resources/ol.js"></script>
     <script src="http://cdn.polyfill.io/v2/polyfill.min.js?features=Element.prototype.classList,URL"></script>
     <script src="resources/horsey.min.js"></script>
     <script src="resources/ol3-search-layer.js"></script>
-    <script src="./resources/ol-layerswitcher.js"></script>
+    <script src="resources/ol-layerswitcher.js"></script>
     <script src="layers/Terrestrial_ecoregions_6.js"></script>
     <script src="layers/Ecuador_7.js"></script>
     <script src="layers/Potentialwildlifecorridors_8.js"></script>
@@ -123,7 +132,7 @@
     <script src="styles/FCATBilsa_30_style.js"></script>
     <script src="styles/FCATReserve_31_style.js"></script>
 
-    <!-- Application Code -->
-    <script type="module" src="./js/main.js"></script>
+    <!-- Initialize Map -->
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>

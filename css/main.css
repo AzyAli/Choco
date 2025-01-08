@@ -1,99 +1,173 @@
-/* Main stylesheet for Chocó Alliance Web Map */
-
-/* Reset and base styles */
-html, body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    overflow: hidden;
-    background-color: #ffffff;
+/* Global Styles */
+:root {
+    --header-height: 60px;
+    --bottom-height: 30px;
+    --toolbar-width: 40px;
+    --primary-color: #034732;
+    --secondary-color: #0A8754;
+    --text-color: #ffffff;
+    --background-color: #f5f5f5;
 }
 
-/* Layout components */
-#frame {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-    position: relative;
+* {
     box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-/* Header styles */
-.header {
-    width: 100%;
-    height: 80px;
-    background-color: #124400;
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
+body {
+    font-family: Arial, sans-serif;
+    overflow: hidden;
+}
+
+/* Frame Layout */
+#frame {
     position: absolute;
     top: 0;
     left: 0;
+    right: 0;
+    bottom: 0;
+    display: grid;
+    grid-template-rows: var(--header-height) 1fr var(--bottom-height);
+}
+
+/* Header Styles */
+.header {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     z-index: 1000;
 }
 
 .logo img {
-    height: 60px;
-    transition: transform 0.2s;
+    height: 50px;
+    width: auto;
 }
 
-.logo img:hover {
-    transform: scale(1.05);
+.header-title {
+    font-size: 1.2em;
+    font-weight: bold;
+    flex-grow: 1;
 }
 
-/* Map container */
+.search-container {
+    flex-grow: 2;
+    max-width: 400px;
+}
+
+.search-input {
+    width: 100%;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    background-color: rgba(255,255,255,0.1);
+    color: var(--text-color);
+}
+
+.search-input::placeholder {
+    color: rgba(255,255,255,0.7);
+}
+
+/* Side Toolbar */
+.side-toolbar {
+    position: absolute;
+    top: calc(var(--header-height) + 10px);
+    left: 10px;
+    width: var(--toolbar-width);
+    background-color: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    z-index: 1000;
+}
+
+.tool-button {
+    width: 100%;
+    height: var(--toolbar-width);
+    border: none;
+    background: white;
+    color: var(--primary-color);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2em;
+    transition: background-color 0.2s;
+}
+
+.tool-button:hover {
+    background-color: var(--background-color);
+}
+
+.tool-button:not(:last-child) {
+    border-bottom: 1px solid #eee;
+}
+
+/* Map Container */
 #map {
+    position: relative;
     width: 100%;
-    height: calc(100% - 105px);
-    position: absolute;
-    top: 80px;
+    height: 100%;
 }
 
-/* Bottom widgets */
+/* Bottom Widgets */
 .bottom-widgets {
-    width: 100%;
-    height: 25px;
-    background-color: #124400;
-    color: white;
-    position: absolute;
-    bottom: 0;
-    left: 0;
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    padding: 0 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 10px;
-    z-index: 1000;
+    font-size: 0.9em;
 }
 
-/* Layer controls */
-.layer-control {
-    background: white;
-    border-radius: 4px;
-    padding: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+/* Popup Styles */
+.ol-popup {
     position: absolute;
-    top: 90px;
-    right: 10px;
-    z-index: 1000;
-    max-height: 80%;
-    overflow-y: auto;
+    background-color: white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #cccccc;
+    bottom: 12px;
+    left: -50px;
+    min-width: 280px;
 }
 
-/* Responsive design */
-@media (max-width: 768px) {
-    .header {
-        height: 60px;
-    }
-    
-    .logo img {
-        height: 45px;
-    }
-    
-    #map {
-        height: calc(100% - 85px);
-        top: 60px;
-    }
+.ol-popup:after, .ol-popup:before {
+    top: 100%;
+    border: solid transparent;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.ol-popup:after {
+    border-top-color: white;
+    border-width: 10px;
+    left: 48px;
+    margin-left: -10px;
+}
+
+.ol-popup:before {
+    border-top-color: #cccccc;
+    border-width: 11px;
+    left: 48px;
+    margin-left: -11px;
+}
+
+.ol-popup-closer {
+    text-decoration: none;
+    position: absolute;
+    top: 2px;
+    right: 8px;
+}
+
+.ol-popup-closer:after {
+    content: "✖";
 }
