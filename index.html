@@ -19,29 +19,70 @@
 <body>
     <div id="frame">
         <div class="header">
-            <a href="#" class="logo">
+            <a href="https://www.chocoalliance.org/" class="logo" target="_blank">
                 <img src="Logo-Stacked.png" alt="Logo" height="60" />
             </a>
             The Chocó Alliance Web Map
         </div>
         <div id="left-widgets">
-            <div class="widget" id="zoom-widget"></div>
-            <div class="widget" id="fullscreen-widget"></div>
-            <div class="widget" id="layerswitcher-widget"></div>
-            <div class="widget" id="search-widget"></div>
+            <div class="widget" id="measure-widget" title="Measure">
+                <i class="fas fa-ruler"></i>
+            </div>
+            <div class="widget" id="draw-widget" title="Draw">
+                <i class="fas fa-pencil-alt"></i>
+            </div>
+            <div class="widget" id="swipe-widget" title="Layer Swipe">
+                <i class="fas fa-exchange-alt"></i>
+            </div>
+            <div class="widget" id="export-widget" title="Export Map">
+                <i class="fas fa-download"></i>
+            </div>
+            <div class="widget" id="upload-widget" title="Upload Data">
+                <i class="fas fa-upload"></i>
+            </div>
         </div>
         <div id="map">
             <div id="popup" class="ol-popup">
                 <a href="#" id="popup-closer" class="ol-popup-closer"></a>
                 <div id="popup-content"></div>
             </div>
+            
+            <!-- Measure Tool Controls -->
+            <div class="measure-control ol-unselectable ol-control">
+                <select id="measure-type" style="display: none;">
+                    <option value="length">Length</option>
+                    <option value="area">Area</option>
+                </select>
+            </div>
+            
+            <!-- Draw Tool Controls -->
+            <div class="draw-control ol-unselectable ol-control">
+                <select id="draw-type" style="display: none;">
+                    <option value="Point">Point</option>
+                    <option value="LineString">Line</option>
+                    <option value="Polygon">Polygon</option>
+                    <option value="Circle">Circle</option>
+                </select>
+            </div>
+            
+            <!-- Layer Swipe Control -->
+            <div class="swipe-control" style="display: none;">
+                <input id="swipe" type="range" style="width: 100%">
+            </div>
+            
+            <!-- Export Control -->
+            <div class="export-control" style="display: none;">
+                <a id="image-download" download="map.png"></a>
+            </div>
         </div>
         <div class="bottom-widgets">
             <div class="created-by">
-                <a href="#link1">Created by AzyAli</a>
+                <a href="https://nl.linkedin.com/in/abdulaziz-yusuf-ali" target="_blank">Created by AzyAli</a>
             </div>
         </div>
     </div>
+    
+    <!-- Base Scripts -->
     <script src="resources/qgis2web_expressions.js"></script>
     <script src="resources/proj4.js"></script>
     <script>proj4.defs('EPSG:4326','+proj=longlat +datum=WGS84 +no_defs');</script>
@@ -131,6 +172,14 @@
     <script src="layers/layers.js"></script>
     <script src="resources/Autolinker.min.js"></script>
     <script src="resources/qgis2web.js"></script>
+    
+    <!-- Custom Scripts -->
+    <script src="js/measure.js"></script>
+    <script src="js/draw.js"></script>
+    <script src="js/layerSwipe.js"></script>
+    <script src="js/export.js"></script>
+    <script src="js/upload.js"></script>
+    <script src="js/main.js"></script>
     
     <script>
         var wms_layers = [];
