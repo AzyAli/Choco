@@ -36,15 +36,25 @@
 
         <!-- Side Toolbar -->
         <div class="side-toolbar">
-            <button class="tool-button" id="zoom-in" title="Zoom In">+</button>
-            <button class="tool-button" id="zoom-out" title="Zoom Out">-</button>
-            <button class="tool-button" id="home" title="Home"><i class="fas fa-home"></i></button>
-            <button class="tool-button" id="layers" title="Layers"><i class="fas fa-layers"></i></button>
-            <button class="tool-button" id="measure" title="Measure"><i class="fas fa-ruler"></i></button>
+            <button class="tool-button" id="zoom-in" title="Zoom In">
+                <i class="fas fa-plus"></i>
+            </button>
+            <button class="tool-button" id="zoom-out" title="Zoom Out">
+                <i class="fas fa-minus"></i>
+            </button>
+            <button class="tool-button" id="home" title="Home">
+                <i class="fas fa-home"></i>
+            </button>
+            <button class="tool-button" id="layers" title="Layers">
+                <i class="fas fa-layer-group"></i>
+            </button>
+            <button class="tool-button" id="measure" title="Measure">
+                <i class="fas fa-ruler"></i>
+            </button>
         </div>
 
         <!-- Map Container -->
-        <div id="map">
+        <div id="map" class="ol-map">
             <div id="popup" class="ol-popup">
                 <a href="#" id="popup-closer" class="ol-popup-closer"></a>
                 <div id="popup-content"></div>
@@ -131,8 +141,9 @@
     <script src="styles/TMAJAMACOAQUE_29_style.js"></script>
     <script src="styles/FCATBilsa_30_style.js"></script>
     <script src="styles/FCATReserve_31_style.js"></script>
-
+    
     <!-- Initialize Map -->
+    <script src="js/config.js"></script>
     <script type="module" src="js/main.js"></script>
 </body>
 </html>
