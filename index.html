@@ -11,6 +11,7 @@
     <link rel="stylesheet" type="text/css" href="resources/horsey.min.css">
     <link rel="stylesheet" type="text/css" href="resources/ol3-search-layer.min.css">
     <link rel="stylesheet" href="resources/ol-layerswitcher.css">
+    <link rel="stylesheet" href="resources/qgis2web.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <title>The Chocó Alliance Web Map</title>
@@ -51,6 +52,8 @@
     <script src="resources/horsey.min.js"></script>
     <script src="resources/ol3-search-layer.js"></script>
     <script src="resources/ol-layerswitcher.js"></script>
+    
+    <!-- Load all layer files -->
     <script src="layers/Terrestrial_ecoregions_6.js"></script>
     <script src="layers/Ecuador_7.js"></script>
     <script src="layers/Potentialwildlifecorridors_8.js"></script>
@@ -86,6 +89,8 @@
     <script src="layers/Penaherrera_reservas_38.js"></script>
     <script src="layers/GarciaMoreno_reservas_39.js"></script>
     <script src="layers/VacasGalindo_reservas_40.js"></script>
+    
+    <!-- Load all style files -->
     <script src="styles/Terrestrial_ecoregions_6_style.js"></script>
     <script src="styles/Ecuador_7_style.js"></script>
     <script src="styles/Potentialwildlifecorridors_8_style.js"></script>
@@ -112,6 +117,20 @@
     <script src="styles/TMAJAMACOAQUE_29_style.js"></script>
     <script src="styles/FCATBilsa_30_style.js"></script>
     <script src="styles/FCATReserve_31_style.js"></script>
+    <script src="styles/LA_ESPERANZA_32_style.js"></script>
+    <script src="styles/DRACULA_ZONA_ALTA_33_style.js"></script>
+    <script src="styles/DRACULA_ZONA_BAJA_34_style.js"></script>
+    <script src="styles/DRACULA_ZONA_MEDIA_35_style.js"></script>
+    <script src="styles/Cuellaje_reservas_36_style.js"></script>
+    <script src="styles/Apuela_reservas_37_style.js"></script>
+    <script src="styles/Penaherrera_reservas_38_style.js"></script>
+    <script src="styles/GarciaMoreno_reservas_39_style.js"></script>
+    <script src="styles/VacasGalindo_reservas_40_style.js"></script>
+    
+    <!-- Load layers configuration -->
+    <script src="layers/layers.js"></script>
+    <script src="resources/Autolinker.min.js"></script>
+    <script src="resources/qgis2web.js"></script>
     <script>
         // Initialize the map
         var map = new ol.Map({
