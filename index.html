@@ -131,20 +131,90 @@
     <script src="layers/layers.js"></script>
     <script src="resources/Autolinker.min.js"></script>
     <script src="resources/qgis2web.js"></script>
+    
     <script>
+        var wms_layers = [];
+        
+        // Initialize basemap layers
+        var lyr_OpenStreetMap = new ol.layer.Tile({
+            'title': 'OpenStreetMap',
+            'type': 'base',
+            source: new ol.source.XYZ({
+                url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png'
+            })
+        });
+
+        var lyr_GoogleSatellite = new ol.layer.Tile({
+            'title': 'Google Satellite',
+            'type': 'base',
+            source: new ol.source.XYZ({
+                url: 'https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}'
+            })
+        });
+
+        var lyr_GoogleTerrain = new ol.layer.Tile({
+            'title': 'Google Terrain',
+            'type': 'base',
+            source: new ol.source.XYZ({
+                url: 'https://mt1.google.com/vt/lyrs=p&x={x}&y={y}&z={z}'
+            })
+        });
+
         // Initialize the map
         var map = new ol.Map({
             target: 'map',
             layers: [
-                new ol.layer.Tile({
-                    source: new ol.source.OSM()
-                })
+                lyr_OpenStreetMap,
+                lyr_GoogleSatellite,
+                lyr_GoogleTerrain,
+                lyr_Terrestrial_ecoregions_6,
+                lyr_Ecuador_7,
+                lyr_Potentialwildlifecorridors_8,
+                lyr_Rivers_9,
+                lyr_MiningCONCESIONES1_10,
+                lyr_MiningCONCESIONESN_11,
+                lyr_MiningCONCESIONESS_12,
+                lyr_Communities_13,
+                lyr_indigenousreserves_14,
+                lyr_Acusmit_15,
+                lyr_BOSQUESPROTECTORES_16,
+                lyr_CotocachiCayapasEcologicalReserve_17,
+                lyr_MacheChindul_18,
+                lyr_Reserva_Biosfera_Choco_19,
+                lyr_ChachiReserves_20,
+                lyr_JocotocoCanande_21,
+                lyr_Maquipucuna_22,
+                lyr_LosCedrosReserve_23,
+                lyr_MaquipucunaReserve_24,
+                lyr_NeblinaReserve_25,
+                lyr_Ecominga_26,
+                lyr_TesoroEscondidoReserve_27,
+                lyr_TMAPATADEPATAJO_28,
+                lyr_TMAJAMACOAQUE_29,
+                lyr_FCATBilsa_30,
+                lyr_FCATReserve_31,
+                lyr_LA_ESPERANZA_32,
+                lyr_DRACULA_ZONA_ALTA_33,
+                lyr_DRACULA_ZONA_BAJA_34,
+                lyr_DRACULA_ZONA_MEDIA_35,
+                lyr_Cuellaje_reservas_36,
+                lyr_Apuela_reservas_37,
+                lyr_Penaherrera_reservas_38,
+                lyr_GarciaMoreno_reservas_39,
+                lyr_VacasGalindo_reservas_40
             ],
             view: new ol.View({
-                center: ol.proj.fromLonLat([-79.4512, 43.6568]),
-                zoom: 10
+                center: ol.proj.fromLonLat([-79.0, 0.5]),  // Center on Ecuador
+                zoom: 8
             })
         });
+
+        // Initialize layer switcher
+        var layerSwitcher = new ol.control.LayerSwitcher({
+            tipLabel: 'Layers',
+            groupSelectStyle: 'group'
+        });
+        map.addControl(layerSwitcher);
 
         // Initialize zoom control
         var zoomControl = new ol.control.Zoom({
@@ -158,34 +228,33 @@
         });
         map.addControl(fullScreenControl);
 
-        // Initialize layer switcher control
-        var layerSwitcher = new ol.control.LayerSwitcher({
-            target: 'layerswitcher-widget',
-            tipLabel: 'Layers',
-            activationMode: 'click'
-        });
-        map.addControl(layerSwitcher);
-
-        // Initialize search control
-        var searchControl = new ol.control.Control({
-            element: document.getElementById('search-widget')
-        });
-        map.addControl(searchControl);
-
         // Initialize popup
         var container = document.getElementById('popup');
         var content = document.getElementById('popup-content');
         var closer = document.getElementById('popup-closer');
-        var overlayPopup = new ol.Overlay({
-            element: container
+        var overlay = new ol.Overlay({
+            element: container,
+            autoPan: true,
+            autoPanAnimation: {
+                duration: 250
+            }
         });
-        map.addOverlay(overlayPopup);
+        map.addOverlay(overlay);
 
         closer.onclick = function() {
-            container.style.display = 'none';
+            overlay.setPosition(undefined);
             closer.blur();
             return false;
         };
+
+        map.on('singleclick', function(evt) {
+            var coordinate = evt.coordinate;
+            var hdms = ol.coordinate.toStringHDMS(ol.proj.transform(
+                coordinate, 'EPSG:3857', 'EPSG:4326'));
+
+            content.innerHTML = '<p>You clicked here:</p><code>' + hdms + '</code>';
+            overlay.setPosition(coordinate);
+        });
     </script>
 </body>
 </html>
