@@ -58,4 +58,4 @@ var style_layername = function(feature, resolution) {
 
 ## Contact
 
-For questions or contributions, please contact [Your Contact Information]
+For questions or contributions, please contact  me at this addy a.y.ali@student.utwente.nl
