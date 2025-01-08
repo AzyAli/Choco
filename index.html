@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" class="size-mode-LARGE jimu-ltr en" dir="ltr" style="--vh:20.41px;--vw:19.2px;">
+<html lang="en" class="size-mode-LARGE jimu-ltr en" dir="ltr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
@@ -9,101 +9,16 @@
     <meta name="google-site-verification" content="Gl928UcZRBt8t7njrpXivrsVrbVcc7sLybtCMZ6Dzlg">
     <title>The Chocó Alliance Web Map</title>
     <link rel="icon" type="image/x-icon" href="favicon.ico">
+    
+    <!-- External Libraries -->
     <link rel="stylesheet" href="./resources/ol.css">
     <link rel="stylesheet" href="resources/fontawesome-all.min.css">
-    <link rel="stylesheet" type="text/css" href="resources/horsey.min.css">
-    <link rel="stylesheet" type="text/css" href="resources/ol3-search-layer.min.css">
+    <link rel="stylesheet" href="resources/horsey.min.css">
+    <link rel="stylesheet" href="resources/ol3-search-layer.min.css">
     <link rel="stylesheet" href="./resources/ol-layerswitcher.css">
-    <link rel="stylesheet" href="./resources/qgis2web.css">
-    <style>
-        html, body {
-            width: 100%;
-            height: 100%;
-            margin: 0;
-            overflow: hidden;
-            background-color: #ffffff;
-        }
-        #frame {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
-            height: 100%;
-            position: relative;
-            box-sizing: border-box;
-        }
-        .header {
-            width: 100%;
-            height: 80px; /* Make the top frame bar 80px thick */
-            background-color: #124400; /* Dark green color */
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            position: absolute;
-            top: 0; /* Align the header to the top */
-            left: 0;
-        }
-        .bottom-widgets {
-            width: 100%;
-            height: 25px; /* Make the bottom frame bar 20px thick */
-            background-color: #124400; /* Dark green color */
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            position: absolute;
-            bottom: 0; /* Align the bottom widgets to the bottom */
-            left: 0;
-        }
-        .header .logo {
-            position: absolute;
-            top: 5px;
-            left: 5px;
-        }
-        #left-widgets {
-            width: 50px; /* Ensure the width is consistent with the height of top and bottom containers */
-            background-color: #124400; /* Match the dark green color */
-            position: absolute;
-            top: 75px; /* Align to the bottom of the header */
-            bottom: 20px; /* Align to the top of the bottom widgets */
-            left: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            padding-top: 10px; /* Add padding to separate from top frame */
-        }
-        .widget {
-            width: 50px;
-            height: 50px;
-            background-color: white;
-            color: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            margin: 2px 0; /* Add margin to create spacing between widgets */
-        }
-        #map {
-            flex-grow: 1;
-            margin-left: 50px; /* Ensure it does not overlap with the left widgets */
-            margin-top: 80px; /* Ensure it does not overlap with the header */
-            margin-bottom: 20px; /* Ensure it does not overlap with the bottom widgets */
-            position: absolute;
-            top: 80px; /* Align to the bottom of the header */
-            bottom: 20px; /* Align to the top of the bottom widgets */
-            right: 0; /* Stretch to the right edge of the screen */
-            left: 50px; /* Align with the left widgets */
-        }
-        .created-by {
-            font-size: 12px; /* Make the text smaller */
-        }
-        .created-by a {
-            color: white;
-            text-decoration: none;
-        }
-    </style>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
     <div id="frame">
@@ -130,8 +45,12 @@
             <div class="created-by">
                 <a href="#link1">Created by AzyAli</a>
             </div>
+            <div id="scale-line"></div>
+            <div id="mouse-position"></div>
         </div>
     </div>
+
+    <!-- External Libraries -->
     <script src="resources/qgis2web_expressions.js"></script>
     <script src="resources/proj4.js"></script>
     <script>proj4.defs('EPSG:4326','+proj=longlat +datum=WGS84 +no_defs');</script>
@@ -203,5 +122,8 @@
     <script src="styles/TMAJAMACOAQUE_29_style.js"></script>
     <script src="styles/FCATBilsa_30_style.js"></script>
     <script src="styles/FCATReserve_31_style.js"></script>
+
+    <!-- Application Code -->
+    <script type="module" src="./js/main.js"></script>
 </body>
 </html>
