@@ -1,12 +1,20 @@
 /* Global Styles */
 :root {
-    --header-height: 60px;
-    --bottom-height: 30px;
-    --toolbar-width: 40px;
-    --primary-color: #034732;
-    --secondary-color: #0A8754;
+    --header-height: 80px;
+    --bottom-height: 25px;
+    --toolbar-width: 50px;
+    --primary-color: #124400;
+    --secondary-color: #aff8b0;
     --text-color: #ffffff;
-    --background-color: #f5f5f5;
+    --background-color: #ffffff;
+}
+
+html, body {
+    background-color: #ffffff;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    overflow: hidden;
 }
 
 * {
@@ -24,147 +32,128 @@ body {
 
 /* Frame Layout */
 #frame {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: grid;
-    grid-template-rows: var(--header-height) 1fr var(--bottom-height);
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    box-sizing: border-box;
 }
 
 /* Header Styles */
 .header {
-    background-color: var(--primary-color);
-    color: var(--text-color);
-    padding: 0 20px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    z-index: 1000;
-}
-
-.logo img {
-    height: 50px;
-    width: auto;
-}
-
-.header-title {
-    font-size: 1.2em;
-    font-weight: bold;
-    flex-grow: 1;
-}
-
-.search-container {
-    flex-grow: 2;
-    max-width: 400px;
-}
-
-.search-input {
     width: 100%;
-    padding: 8px 12px;
-    border: none;
-    border-radius: 4px;
-    background-color: rgba(255,255,255,0.1);
-    color: var(--text-color);
-}
-
-.search-input::placeholder {
-    color: rgba(255,255,255,0.7);
-}
-
-/* Side Toolbar */
-.side-toolbar {
-    position: absolute;
-    top: calc(var(--header-height) + 10px);
-    left: 10px;
-    width: var(--toolbar-width);
-    background-color: white;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    z-index: 1000;
-}
-
-.tool-button {
-    width: 100%;
-    height: var(--toolbar-width);
-    border: none;
-    background: white;
-    color: var(--primary-color);
-    cursor: pointer;
+    height: 80px;
+    background-color: #124400;
+    color: white;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2em;
-    transition: background-color 0.2s;
+    font-size: 24px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
 }
 
-.tool-button:hover {
-    background-color: var(--background-color);
+.header .logo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
 }
 
-.tool-button:not(:last-child) {
-    border-bottom: 1px solid #eee;
+.header .logo img {
+    height: 60px;
+}
+
+/* Side Toolbar */
+#left-widgets {
+    width: 50px;
+    background-color: #124400;
+    position: absolute;
+    top: 80px;
+    bottom: 25px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 10px;
+    z-index: 1000;
+}
+
+.widget {
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    color: #124400;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 2px 0;
+    border-radius: 4px;
+    cursor: pointer;
 }
 
 /* Map Container */
 #map {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    grid-row: 2;
-    background: #f5f5f5;
-}
-
-.ol-map {
-    width: 100%;
-    height: 100%;
-}
-
-/* OpenLayers Controls */
-.ol-control {
-    background-color: transparent;
-}
-
-.ol-control button {
-    background-color: white;
-    color: var(--primary-color);
-    border: none;
-    border-radius: 4px;
-    margin: 2px;
-}
-
-.ol-control button:hover {
-    background-color: var(--background-color);
-}
-
-/* Layer Switcher */
-.layer-switcher {
-    top: 0.5em;
-    right: 0.5em;
-    text-align: left;
-}
-
-.layer-switcher.shown {
-    background-color: white;
-}
-
-.layer-switcher button {
-    background-color: white;
-    color: var(--primary-color);
+    position: absolute;
+    top: 80px;
+    bottom: 25px;
+    right: 0;
+    left: 50px;
 }
 
 /* Bottom Widgets */
 .bottom-widgets {
-    background-color: var(--primary-color);
-    color: var(--text-color);
-    padding: 0 20px;
+    width: 100%;
+    height: 25px;
+    background-color: #124400;
+    color: white;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    font-size: 0.9em;
-    grid-row: 3;
+    justify-content: center;
+    font-size: 12px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+}
+
+.created-by {
+    font-size: 12px;
+}
+
+.created-by a {
+    color: white;
+    text-decoration: none;
+}
+
+/* OpenLayers Controls */
+.ol-control > * {
+    background-color: #aff8b0 !important;
+    color: #124400 !important;
+    border-radius: 0px;
+}
+
+.ol-attribution a, 
+.gcd-gl-input::placeholder, 
+.search-layer-input-search::placeholder {
+    color: #124400 !important;
+}
+
+.search-layer-input-search {
+    background-color: #aff8b0 !important;
+}
+
+.ol-control > *:focus, 
+.ol-control > *:hover {
+    background-color: rgba(175, 248, 176, 0.7) !important;
+}
+
+.ol-control {
+    background-color: rgba(255, 255, 255, .4) !important;
+    padding: 2px !important;
 }
 
 /* Popup Styles */
@@ -180,7 +169,8 @@ body {
     min-width: 280px;
 }
 
-.ol-popup:after, .ol-popup:before {
+.ol-popup:after, 
+.ol-popup:before {
     top: 100%;
     border: solid transparent;
     content: " ";
