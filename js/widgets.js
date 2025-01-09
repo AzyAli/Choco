@@ -321,47 +321,47 @@ function initUploadTool() {
 // Export Tool
 function initializeExport() {
     document.getElementById('export-widget').addEventListener('click', function() {
-        map.once('rendercomplete', function() {
-            const mapCanvas = document.createElement('canvas');
-            const size = map.getSize();
-            mapCanvas.width = size[0];
-            mapCanvas.height = size[1];
-            const mapContext = mapCanvas.getContext('2d');
-            
-            Array.prototype.forEach.call(
-                document.querySelectorAll('.ol-layer canvas'),
-                function(canvas) {
-                    if (canvas.width > 0) {
-                        const opacity = canvas.parentNode.style.opacity || canvas.style.opacity;
-                        mapContext.globalAlpha = opacity === '' ? 1 : Number(opacity);
-                        
-                        const transform = canvas.style.transform;
-                        const matrix = transform
-                            ? transform
-                                .match(/^matrix\(([^\(]*)\)$/)[1]
-                                .split(',')
-                                .map(Number)
-                            : [
-                                parseFloat(canvas.style.width) / canvas.width,
-                                0,
-                                0,
-                                parseFloat(canvas.style.height) / canvas.height,
-                                0,
-                                0
-                            ];
-                        
-                        mapContext.setTransform(...matrix);
-                        mapContext.drawImage(canvas, 0, 0);
-                    }
-                }
-            );
-            
-            const link = document.createElement('a');
-            link.href = mapCanvas.toDataURL();
-            link.download = 'map.png';
-            link.click();
+        // Create a new canvas
+        var mapCanvas = document.createElement('canvas');
+        var size = map.getSize();
+        mapCanvas.width = size[0];
+        mapCanvas.height = size[1];
+        var mapContext = mapCanvas.getContext('2d');
+
+        // Get all canvas elements from the map
+        var canvases = document.querySelectorAll('.ol-layer canvas');
+        
+        // Draw each canvas onto our export canvas
+        canvases.forEach(function(canvas) {
+            if (canvas.width > 0) {
+                var opacity = canvas.parentNode.style.opacity || canvas.style.opacity || 1;
+                mapContext.globalAlpha = opacity;
+                var transform = canvas.style.transform;
+                // Get the transform parameters from the style's transform matrix
+                var matrix = transform.match(/^matrix\(([^\(]*)\)$/)[1].split(',').map(Number);
+                // Apply the transform to the export canvas context
+                mapContext.setTransform(matrix[0], matrix[1], matrix[2], matrix[3], matrix[4], matrix[5]);
+                mapContext.drawImage(canvas, 0, 0);
+            }
         });
-        map.renderSync();
+
+        try {
+            // Convert the canvas to a data URL
+            var imageUrl = mapCanvas.toDataURL('image/png');
+            
+            // Create a download link
+            var downloadLink = document.createElement('a');
+            downloadLink.href = imageUrl;
+            downloadLink.download = 'map.png';
+            
+            // Trigger download
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+        } catch (e) {
+            console.error('Error exporting map:', e);
+            alert('Unable to export map due to cross-origin resource restrictions. Please ensure all map layers are from CORS-enabled sources.');
+        }
     });
 }
 
