@@ -41,38 +41,40 @@
                 <i class="fas fa-upload"></i>
             </div>
         </div>
-        <div id="map">
-            <div id="popup" class="ol-popup">
-                <a href="#" id="popup-closer" class="ol-popup-closer"></a>
-                <div id="popup-content"></div>
-            </div>
-            
-            <!-- Measure Tool Controls -->
-            <div class="measure-control ol-unselectable ol-control">
-                <select id="measure-type" style="display: none;">
-                    <option value="length">Length</option>
-                    <option value="area">Area</option>
-                </select>
-            </div>
-            
-            <!-- Draw Tool Controls -->
-            <div class="draw-control ol-unselectable ol-control">
-                <select id="draw-type" style="display: none;">
-                    <option value="Point">Point</option>
-                    <option value="LineString">Line</option>
-                    <option value="Polygon">Polygon</option>
-                    <option value="Circle">Circle</option>
-                </select>
-            </div>
-            
-            <!-- Layer Swipe Control -->
-            <div class="swipe-control" style="display: none;">
-                <input id="swipe" type="range" style="width: 100%">
-            </div>
-            
-            <!-- Export Control -->
-            <div class="export-control" style="display: none;">
-                <a id="image-download" download="map.png"></a>
+        <div class="map-container">
+            <div id="map">
+                <div id="popup" class="ol-popup">
+                    <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+                    <div id="popup-content"></div>
+                </div>
+                
+                <!-- Measure Tool Controls -->
+                <div class="measure-control ol-unselectable ol-control">
+                    <select id="measure-type" style="display: none;">
+                        <option value="length">Length</option>
+                        <option value="area">Area</option>
+                    </select>
+                </div>
+                
+                <!-- Draw Tool Controls -->
+                <div class="draw-control ol-unselectable ol-control">
+                    <select id="draw-type" style="display: none;">
+                        <option value="Point">Point</option>
+                        <option value="LineString">Line</option>
+                        <option value="Polygon">Polygon</option>
+                        <option value="Circle">Circle</option>
+                    </select>
+                </div>
+                
+                <!-- Layer Swipe Control -->
+                <div class="swipe-control" style="display: none;">
+                    <input id="swipe" type="range" style="width: 100%">
+                </div>
+                
+                <!-- Export Control -->
+                <div class="export-control" style="display: none;">
+                    <a id="image-download" download="map.png"></a>
+                </div>
             </div>
         </div>
         <div class="bottom-widgets">
