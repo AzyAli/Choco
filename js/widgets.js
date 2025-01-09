@@ -156,10 +156,9 @@ function initializeMeasureTool() {
 }
 
 // Draw Tool
-function initializeDrawTool() {
-    const drawSource = new ol.source.Vector();
-    const drawLayer = new ol.layer.Vector({
-        source: drawSource,
+function initDrawTool() {
+    let drawLayer = new ol.layer.Vector({
+        source: new ol.source.Vector(),
         style: new ol.style.Style({
             fill: new ol.style.Fill({
                 color: 'rgba(46, 125, 50, 0.2)'
@@ -178,70 +177,144 @@ function initializeDrawTool() {
     });
 
     map.addLayer(drawLayer);
+    let draw;
 
     document.getElementById('draw-widget').addEventListener('click', function() {
-        const drawType = document.getElementById('draw-type');
-        drawType.style.display = drawType.style.display === 'none' ? 'block' : 'none';
-    });
-
-    document.getElementById('draw-type').addEventListener('change', function(e) {
-        if (drawInteraction) {
-            map.removeInteraction(drawInteraction);
+        if (draw) {
+            map.removeInteraction(draw);
+            draw = null;
+            this.style.backgroundColor = 'white';
+            return;
         }
-        
-        if (e.target.value === 'None') return;
-        
-        drawInteraction = new ol.interaction.Draw({
-            source: drawSource,
-            type: e.target.value
+
+        this.style.backgroundColor = '#e0e0e0';
+        draw = new ol.interaction.Draw({
+            source: drawLayer.getSource(),
+            type: 'Polygon'
         });
-        
-        map.addInteraction(drawInteraction);
+
+        map.addInteraction(draw);
     });
 }
 
 // Layer Swipe Tool
-function initializeLayerSwipe() {
-    document.getElementById('swipe-widget').addEventListener('click', function() {
-        const swipeControl = document.querySelector('.swipe-control');
-        swipeControl.style.display = swipeControl.style.display === 'none' ? 'block' : 'none';
-        
-        if (swipeControl.style.display === 'block' && !swipeLayer) {
-            // Get the first visible non-base layer
+function initSwipeTool() {
+    let swipeControl = document.createElement('div');
+    swipeControl.className = 'swipe-control';
+    swipeControl.innerHTML = '<input type="range" id="swipe" min="0" max="100" value="50" style="width: 100%">';
+    document.body.appendChild(swipeControl);
+
+    let swipeWidget = document.getElementById('swipe-widget');
+    let isSwipeActive = false;
+    let swipeLayer = null;
+
+    swipeWidget.addEventListener('click', function() {
+        if (isSwipeActive) {
+            // Deactivate swipe
+            swipeControl.style.display = 'none';
+            if (swipeLayer) {
+                swipeLayer.un('prerender', handlePrerender);
+                swipeLayer.un('postrender', handlePostrender);
+                swipeLayer = null;
+            }
+            isSwipeActive = false;
+            this.style.backgroundColor = 'white';
+        } else {
+            // Get the topmost visible non-base layer
             const layers = map.getLayers().getArray();
             for (let i = layers.length - 1; i >= 0; i--) {
                 const layer = layers[i];
-                if (layer.getVisible() && layer.get('type') !== 'base') {
+                if (layer.getVisible() && layer !== baseLayer) {
                     swipeLayer = layer;
                     break;
                 }
             }
             
             if (swipeLayer) {
-                swipeLayer.on('prerender', function(event) {
-                    const ctx = event.context;
-                    const mapSize = map.getSize();
-                    const width = mapSize[0] * (document.getElementById('swipe').value / 100);
-                    
-                    ctx.save();
-                    ctx.beginPath();
-                    ctx.rect(width, 0, mapSize[0] - width, mapSize[1]);
-                    ctx.clip();
-                });
-
-                swipeLayer.on('postrender', function(event) {
-                    const ctx = event.context;
-                    ctx.restore();
-                });
-
-                // Force map render
+                swipeControl.style.display = 'block';
+                isSwipeActive = true;
+                this.style.backgroundColor = '#e0e0e0';
+                
+                swipeLayer.on('prerender', handlePrerender);
+                swipeLayer.on('postrender', handlePostrender);
                 map.render();
             }
         }
     });
 
+    function handlePrerender(event) {
+        const ctx = event.context;
+        const mapSize = map.getSize();
+        const width = mapSize[0] * (document.getElementById('swipe').value / 100);
+        const tl = ol.render.getRenderPixel(event, [width, 0]);
+        const tr = ol.render.getRenderPixel(event, [mapSize[0], 0]);
+        const bl = ol.render.getRenderPixel(event, [width, mapSize[1]]);
+        const br = ol.render.getRenderPixel(event, mapSize);
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(tl[0], tl[1]);
+        ctx.lineTo(bl[0], bl[1]);
+        ctx.lineTo(br[0], br[1]);
+        ctx.lineTo(tr[0], tr[1]);
+        ctx.closePath();
+        ctx.clip();
+    }
+
+    function handlePostrender(event) {
+        const ctx = event.context;
+        ctx.restore();
+    }
+
     document.getElementById('swipe').addEventListener('input', function() {
         map.render();
+    });
+}
+
+// Upload Tool
+function initUploadTool() {
+    createUploadTooltip();
+    
+    const uploadSource = new ol.source.Vector();
+    const uploadLayer = new ol.layer.Vector({
+        source: uploadSource,
+        style: new ol.style.Style({
+            fill: new ol.style.Fill({
+                color: 'rgba(46, 125, 50, 0.2)'
+            }),
+            stroke: new ol.style.Stroke({
+                color: '#2E7D32',
+                width: 2
+            }),
+            image: new ol.style.Circle({
+                radius: 7,
+                fill: new ol.style.Fill({
+                    color: '#2E7D32'
+                })
+            })
+        })
+    });
+
+    map.addLayer(uploadLayer);
+
+    const dragAndDrop = new ol.interaction.DragAndDrop({
+        formatConstructors: [
+            ol.format.GeoJSON,
+            ol.format.KML,
+            ol.format.GPX
+        ]
+    });
+
+    dragAndDrop.on('addfeatures', function(event) {
+        uploadSource.addFeatures(event.features);
+        map.getView().fit(uploadSource.getExtent());
+        uploadTooltip.style.display = 'none';
+    });
+
+    map.addInteraction(dragAndDrop);
+
+    document.getElementById('upload-widget').addEventListener('click', function() {
+        uploadTooltip.style.display = uploadTooltip.style.display === 'none' ? 'block' : 'none';
     });
 }
 
@@ -292,58 +365,11 @@ function initializeExport() {
     });
 }
 
-// Upload Tool
-function initializeUpload() {
-    createUploadTooltip();
-    
-    const uploadSource = new ol.source.Vector();
-    const uploadLayer = new ol.layer.Vector({
-        source: uploadSource,
-        style: new ol.style.Style({
-            fill: new ol.style.Fill({
-                color: 'rgba(46, 125, 50, 0.2)'
-            }),
-            stroke: new ol.style.Stroke({
-                color: '#2E7D32',
-                width: 2
-            }),
-            image: new ol.style.Circle({
-                radius: 7,
-                fill: new ol.style.Fill({
-                    color: '#2E7D32'
-                })
-            })
-        })
-    });
-
-    map.addLayer(uploadLayer);
-
-    const dragAndDrop = new ol.interaction.DragAndDrop({
-        formatConstructors: [
-            ol.format.GeoJSON,
-            ol.format.KML,
-            ol.format.GPX
-        ]
-    });
-
-    dragAndDrop.on('addfeatures', function(event) {
-        uploadSource.addFeatures(event.features);
-        map.getView().fit(uploadSource.getExtent());
-        uploadTooltip.style.display = 'none';
-    });
-
-    map.addInteraction(dragAndDrop);
-
-    document.getElementById('upload-widget').addEventListener('click', function() {
-        uploadTooltip.style.display = uploadTooltip.style.display === 'none' ? 'block' : 'none';
-    });
-}
-
 // Initialize all widgets when the map is ready
 window.addEventListener('load', function() {
     initializeMeasureTool();
-    initializeDrawTool();
-    initializeLayerSwipe();
+    initDrawTool();
+    initSwipeTool();
     initializeExport();
-    initializeUpload();
+    initUploadTool();
 });

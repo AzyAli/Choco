@@ -32,153 +32,122 @@ body {
 
 /* Frame Layout */
 #frame {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    display: flex;
-    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    box-sizing: border-box;
 }
 
 /* Header Styles */
 .header {
+    width: 100%;
+    height: 80px;
     background-color: #2E7D32;
     color: white;
-    padding: 10px;
     display: flex;
     align-items: center;
-    gap: 20px;
-    height: 80px;
-    flex-shrink: 0;
+    justify-content: center;
+    font-size: 24px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .header .logo {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    transition: opacity 0.3s;
-}
-
-.header .logo:hover {
-    opacity: 0.9;
+    height: 60px;
+    margin-right: 20px;
 }
 
 .header .logo img {
-    height: 60px;
+    height: 100%;
 }
 
 /* Side Toolbar */
 #left-widgets {
+    width: 50px;
+    background-color: #2E7D32;
     position: absolute;
-    left: 20px;
-    top: 100px;
     z-index: 1000;
-    background: white;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    top: 80px;
+    bottom: 30px;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 10px;
+    box-shadow: 2px 0 4px rgba(0,0,0,0.1);
 }
 
 .widget {
     width: 40px;
     height: 40px;
+    background-color: white;
+    color: #2E7D32;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    margin: 5px;
+    border-radius: 4px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: all 0.2s;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
 }
 
 .widget:hover {
     background-color: #f0f0f0;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .widget i {
     font-size: 20px;
-    color: #2E7D32;
 }
 
 /* Map Container */
 #map {
-    flex: 1;
-    position: relative;
-    width: 100%;
-    height: calc(100vh - 120px); /* Subtract header and bottom bar height */
-    margin: 0;
-    padding: 0;
+    position: absolute;
+    top: 80px;
+    bottom: 30px;
+    right: 0;
+    left: 50px;
+    background-color: #f5f5f5;
 }
 
 /* Bottom Widgets */
 .bottom-widgets {
+    width: 100%;
+    height: 30px;
     background-color: #2E7D32;
     color: white;
-    padding: 10px;
-    text-align: center;
-    height: 40px;
-    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
 }
 
 .created-by {
-    font-size: 12px;
-}
-
-.created-by a {
     color: white;
     text-decoration: none;
-    transition: opacity 0.3s;
 }
 
-.created-by a:hover {
-    opacity: 0.8;
-}
-
-/* Map Controls */
-.map-controls {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    z-index: 1000;
+.created-by:hover {
+    text-decoration: underline;
 }
 
 /* Measure Tool Styles */
-.measure-control, .draw-control {
-    top: 100px;
-    left: 70px;
-}
-
-.measure-control button {
-    background-color: rgba(255, 255, 255, 0.8);
-}
-
-/* Draw Tool Styles */
-.draw-control select {
-    margin: 2px;
-    padding: 2px;
-}
-
-/* Layer Swipe Styles */
-.swipe-control {
-    position: absolute;
+.measure-control {
     top: 65px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 1000;
-    background: white;
-    padding: 10px;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    left: 8px;
 }
 
-.swipe-control input[type="range"] {
-    width: 100%;
-}
-
-/* Export Control */
-.export-control {
-    display: none;
-}
-
-/* Tooltip Styles */
 .tooltip {
     position: relative;
     background: rgba(0, 0, 0, 0.8);
@@ -202,8 +171,87 @@ body {
     font-weight: bold;
 }
 
-.tooltip-static:before {
-    border-top: 6px solid #2E7D32;
+/* Upload Dialog */
+.upload-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 2000;
+    display: none;
+    min-width: 300px;
+    text-align: center;
+}
+
+.upload-dialog .close-btn {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    padding: 5px 15px;
+    background: #2E7D32;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.upload-dialog .close-btn:hover {
+    background: #1B5E20;
+}
+
+/* Layer Swipe Dialog */
+.swipe-dialog {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 2000;
+    display: none;
+    min-width: 300px;
+}
+
+.swipe-dialog select {
+    width: 100%;
+    margin: 10px 0;
+    padding: 5px;
+}
+
+.swipe-dialog .close-btn {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    padding: 5px 15px;
+    background: #2E7D32;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.swipe-control {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 50px;
+    z-index: 1000;
+    background: white;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    display: none;
+}
+
+/* Hide original measure control */
+.ol-measure {
+    display: none !important;
 }
 
 /* OpenLayers Controls */
@@ -237,11 +285,6 @@ body {
     z-index: 2000;
     display: none;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
-}
-
-/* Hide original measure control */
-.ol-measure {
-    display: none !important;
 }
 
 /* Popup Styles */
