@@ -1,3 +1,20 @@
+// Global variables
+let measureDraw;
+let drawInteraction;
+let swipeLayer;
+let uploadTooltip;
+
+// Create upload tooltip
+function createUploadTooltip() {
+    if (!document.querySelector('.upload-tooltip')) {
+        const tooltip = document.createElement('div');
+        tooltip.className = 'upload-tooltip';
+        tooltip.textContent = 'Drag and drop your GeoJSON, KML, or GPX file here to view it on the map';
+        document.body.appendChild(tooltip);
+        uploadTooltip = tooltip;
+    }
+}
+
 // Measure Tool
 function initializeMeasureTool() {
     const measureSource = new ol.source.Vector();
@@ -22,7 +39,6 @@ function initializeMeasureTool() {
 
     map.addLayer(measureLayer);
 
-    let measureDraw;
     let measureTooltipElement;
     let measureTooltip;
     let sketch;
@@ -43,7 +59,10 @@ function initializeMeasureTool() {
     }
 
     function formatLength(line) {
-        const length = ol.sphere.getLength(line);
+        const sourceProj = map.getView().getProjection();
+        const length = ol.sphere.getLength(line, {
+            projection: sourceProj
+        });
         let output;
         if (length > 100) {
             output = Math.round((length / 1000) * 100) / 100 + ' km';
@@ -54,7 +73,10 @@ function initializeMeasureTool() {
     }
 
     function formatArea(polygon) {
-        const area = ol.sphere.getArea(polygon);
+        const sourceProj = map.getView().getProjection();
+        const area = ol.sphere.getArea(polygon, {
+            projection: sourceProj
+        });
         let output;
         if (area > 10000) {
             output = Math.round((area / 1000000) * 100) / 100 + ' km²';
@@ -135,7 +157,7 @@ function initializeMeasureTool() {
 
 // Draw Tool
 function initializeDrawTool() {
-    const drawSource = new ol.source.Vector({wrapX: false});
+    const drawSource = new ol.source.Vector();
     const drawLayer = new ol.layer.Vector({
         source: drawSource,
         style: new ol.style.Style({
@@ -157,61 +179,53 @@ function initializeDrawTool() {
 
     map.addLayer(drawLayer);
 
-    let draw;
-
     document.getElementById('draw-widget').addEventListener('click', function() {
         const drawType = document.getElementById('draw-type');
         drawType.style.display = drawType.style.display === 'none' ? 'block' : 'none';
     });
 
     document.getElementById('draw-type').addEventListener('change', function(e) {
-        map.removeInteraction(draw);
+        if (drawInteraction) {
+            map.removeInteraction(drawInteraction);
+        }
         
         if (e.target.value === 'None') return;
         
-        draw = new ol.interaction.Draw({
+        drawInteraction = new ol.interaction.Draw({
             source: drawSource,
             type: e.target.value
         });
         
-        map.addInteraction(draw);
+        map.addInteraction(drawInteraction);
     });
 }
 
 // Layer Swipe Tool
 function initializeLayerSwipe() {
-    let swipeLayer;
-    const swipeControl = document.querySelector('.swipe-control');
-    const swipe = document.getElementById('swipe');
-
     document.getElementById('swipe-widget').addEventListener('click', function() {
+        const swipeControl = document.querySelector('.swipe-control');
         swipeControl.style.display = swipeControl.style.display === 'none' ? 'block' : 'none';
         
         if (swipeControl.style.display === 'block' && !swipeLayer) {
-            map.getLayers().forEach(function(layer) {
-                if (layer.getVisible() && layer !== basemapLayer) {
+            // Get the first visible non-base layer
+            const layers = map.getLayers().getArray();
+            for (let i = layers.length - 1; i >= 0; i--) {
+                const layer = layers[i];
+                if (layer.getVisible() && layer.get('type') !== 'base') {
                     swipeLayer = layer;
-                    return;
+                    break;
                 }
-            });
+            }
             
             if (swipeLayer) {
                 swipeLayer.on('prerender', function(event) {
                     const ctx = event.context;
                     const mapSize = map.getSize();
-                    const width = mapSize[0] * (swipe.value / 100);
-                    const tl = ol.render.getRenderPixel(event, [width, 0]);
-                    const tr = ol.render.getRenderPixel(event, [mapSize[0], 0]);
-                    const bl = ol.render.getRenderPixel(event, [width, mapSize[1]]);
-                    const br = ol.render.getRenderPixel(event, mapSize);
-
+                    const width = mapSize[0] * (document.getElementById('swipe').value / 100);
+                    
                     ctx.save();
                     ctx.beginPath();
-                    ctx.moveTo(tl[0], tl[1]);
-                    ctx.lineTo(bl[0], bl[1]);
-                    ctx.lineTo(br[0], br[1]);
-                    ctx.lineTo(tr[0], tr[1]);
-                    ctx.closePath();
+                    ctx.rect(width, 0, mapSize[0] - width, mapSize[1]);
                     ctx.clip();
                 });
 
@@ -219,11 +233,14 @@ function initializeLayerSwipe() {
                     const ctx = event.context;
                     ctx.restore();
                 });
+
+                // Force map render
+                map.render();
             }
         }
     });
 
-    swipe.addEventListener('input', function() {
+    document.getElementById('swipe').addEventListener('input', function() {
         map.render();
     });
 }
@@ -231,72 +248,54 @@ function initializeLayerSwipe() {
 // Export Tool
 function initializeExport() {
     document.getElementById('export-widget').addEventListener('click', function() {
-        const exportControl = document.querySelector('.export-control');
-        exportControl.style.display = exportControl.style.display === 'none' ? 'block' : 'none';
-        
-        if (exportControl.style.display === 'block') {
-            map.once('rendercomplete', function() {
-                const mapCanvas = document.createElement('canvas');
-                const size = map.getSize();
-                mapCanvas.width = size[0];
-                mapCanvas.height = size[1];
-                const mapContext = mapCanvas.getContext('2d');
-                
-                Array.prototype.forEach.call(
-                    map.getViewport().querySelectorAll('.ol-layer canvas, canvas.ol-layer'),
-                    function(canvas) {
-                        if (canvas.width > 0) {
-                            const opacity = canvas.parentNode.style.opacity || canvas.style.opacity;
-                            mapContext.globalAlpha = opacity === '' ? 1 : Number(opacity);
-                            
-                            let matrix;
-                            const transform = canvas.style.transform;
-                            if (transform) {
-                                matrix = transform
-                                    .match(/^matrix\(([^\(]*)\)$/)[1]
-                                    .split(',')
-                                    .map(Number);
-                            } else {
-                                matrix = [
-                                    parseFloat(canvas.style.width) / canvas.width,
-                                    0,
-                                    0,
-                                    parseFloat(canvas.style.height) / canvas.height,
-                                    0,
-                                    0,
-                                ];
-                            }
-                            
-                            CanvasRenderingContext2D.prototype.setTransform.apply(
-                                mapContext,
-                                matrix
-                            );
-                            
-                            const backgroundColor = canvas.parentNode.style.backgroundColor;
-                            if (backgroundColor) {
-                                mapContext.fillStyle = backgroundColor;
-                                mapContext.fillRect(0, 0, canvas.width, canvas.height);
-                            }
-                            
-                            mapContext.drawImage(canvas, 0, 0);
-                        }
+        map.once('rendercomplete', function() {
+            const mapCanvas = document.createElement('canvas');
+            const size = map.getSize();
+            mapCanvas.width = size[0];
+            mapCanvas.height = size[1];
+            const mapContext = mapCanvas.getContext('2d');
+            
+            Array.prototype.forEach.call(
+                document.querySelectorAll('.ol-layer canvas'),
+                function(canvas) {
+                    if (canvas.width > 0) {
+                        const opacity = canvas.parentNode.style.opacity || canvas.style.opacity;
+                        mapContext.globalAlpha = opacity === '' ? 1 : Number(opacity);
+                        
+                        const transform = canvas.style.transform;
+                        const matrix = transform
+                            ? transform
+                                .match(/^matrix\(([^\(]*)\)$/)[1]
+                                .split(',')
+                                .map(Number)
+                            : [
+                                parseFloat(canvas.style.width) / canvas.width,
+                                0,
+                                0,
+                                parseFloat(canvas.style.height) / canvas.height,
+                                0,
+                                0
+                            ];
+                        
+                        mapContext.setTransform(...matrix);
+                        mapContext.drawImage(canvas, 0, 0);
                     }
-                );
-                
-                mapContext.globalAlpha = 1;
-                mapContext.setTransform(1, 0, 0, 1, 0, 0);
-                
-                const link = document.getElementById('image-download');
-                link.href = mapCanvas.toDataURL();
-                link.click();
-            });
-            map.renderSync();
-        }
+                }
+            );
+            
+            const link = document.createElement('a');
+            link.href = mapCanvas.toDataURL();
+            link.download = 'map.png';
+            link.click();
+        });
+        map.renderSync();
     });
 }
 
 // Upload Tool
 function initializeUpload() {
+    createUploadTooltip();
+    
     const uploadSource = new ol.source.Vector();
     const uploadLayer = new ol.layer.Vector({
         source: uploadSource,
@@ -321,24 +320,22 @@ function initializeUpload() {
 
     const dragAndDrop = new ol.interaction.DragAndDrop({
         formatConstructors: [
-            ol.format.GPX,
             ol.format.GeoJSON,
-            ol.format.IGC,
             ol.format.KML,
-            ol.format.TopoJSON
+            ol.format.GPX
         ]
     });
 
     dragAndDrop.on('addfeatures', function(event) {
-        const features = event.features;
-        uploadSource.addFeatures(features);
+        uploadSource.addFeatures(event.features);
         map.getView().fit(uploadSource.getExtent());
+        uploadTooltip.style.display = 'none';
     });
 
     map.addInteraction(dragAndDrop);
 
     document.getElementById('upload-widget').addEventListener('click', function() {
-        alert('Drag and drop GPX, GeoJSON, IGC, KML, or TopoJSON files onto the map to upload them.');
+        uploadTooltip.style.display = uploadTooltip.style.display === 'none' ? 'block' : 'none';
     });
 }
 

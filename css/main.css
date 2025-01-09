@@ -32,29 +32,25 @@ body {
 
 /* Frame Layout */
 #frame {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: flex;
     flex-direction: column;
-    width: 100%;
-    height: 100%;
-    position: relative;
-    box-sizing: border-box;
 }
 
 /* Header Styles */
 .header {
-    width: 100%;
-    height: 80px;
     background-color: #2E7D32;
     color: white;
+    padding: 10px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1000;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    gap: 20px;
+    height: 80px;
+    flex-shrink: 0;
 }
 
 .header .logo {
@@ -74,71 +70,52 @@ body {
 
 /* Side Toolbar */
 #left-widgets {
-    width: 50px;
-    background-color: #2E7D32;
     position: absolute;
-    top: 80px;
-    bottom: 30px;
-    left: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    padding-top: 10px;
+    left: 20px;
+    top: 100px;
     z-index: 1000;
-    box-shadow: 2px 0 4px rgba(0,0,0,0.1);
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .widget {
     width: 40px;
     height: 40px;
-    background-color: white;
-    color: #2E7D32;
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin: 5px;
-    border-radius: 4px;
+    justify-content: center;
     cursor: pointer;
-    transition: all 0.2s;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    transition: background-color 0.3s;
 }
 
 .widget:hover {
     background-color: #f0f0f0;
-    transform: translateY(-1px);
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .widget i {
     font-size: 20px;
+    color: #2E7D32;
 }
 
 /* Map Container */
 #map {
-    position: absolute;
-    top: 80px;
-    bottom: 30px;
-    right: 0;
-    left: 50px;
-    background-color: #f5f5f5;
+    flex: 1;
+    position: relative;
+    width: 100%;
+    height: calc(100vh - 120px); /* Subtract header and bottom bar height */
+    margin: 0;
+    padding: 0;
 }
 
 /* Bottom Widgets */
 .bottom-widgets {
-    width: 100%;
-    height: 30px;
     background-color: #2E7D32;
     color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    z-index: 1000;
-    box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
+    padding: 10px;
+    text-align: center;
+    height: 40px;
+    flex-shrink: 0;
 }
 
 .created-by {
@@ -164,31 +141,16 @@ body {
 }
 
 /* Measure Tool Styles */
-.measure-control {
-    top: 65px;
-    left: 8px;
+.measure-control, .draw-control {
+    top: 100px;
+    left: 70px;
 }
 
 .measure-control button {
     background-color: rgba(255, 255, 255, 0.8);
 }
 
-.tooltip {
-    position: relative;
-    background: rgba(0, 0, 0, 0.5);
-    border-radius: 4px;
-    color: white;
-    padding: 4px 8px;
-    opacity: 0.7;
-    white-space: nowrap;
-}
-
 /* Draw Tool Styles */
-.draw-control {
-    top: 95px;
-    left: 8px;
-}
-
 .draw-control select {
     margin: 2px;
     padding: 2px;
@@ -197,11 +159,14 @@ body {
 /* Layer Swipe Styles */
 .swipe-control {
     position: absolute;
-    bottom: 24px;
+    top: 65px;
     left: 50%;
     transform: translateX(-50%);
-    width: 200px;
     z-index: 1000;
+    background: white;
+    padding: 10px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .swipe-control input[type="range"] {
@@ -210,24 +175,35 @@ body {
 
 /* Export Control */
 .export-control {
-    position: absolute;
-    bottom: 10px;
-    right: 10px;
-    z-index: 1000;
+    display: none;
 }
 
-.export-control button {
+/* Tooltip Styles */
+.tooltip {
+    position: relative;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    pointer-events: none;
+}
+
+.tooltip-static {
     background-color: #2E7D32;
     color: white;
-    border: none;
-    padding: 8px 16px;
+    padding: 4px 8px;
     border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s;
 }
 
-.export-control button:hover {
-    background-color: #1B5E20;
+.tooltip-measure {
+    opacity: 1;
+    font-weight: bold;
+}
+
+.tooltip-static:before {
+    border-top: 6px solid #2E7D32;
 }
 
 /* OpenLayers Controls */
@@ -242,15 +218,30 @@ body {
 }
 
 /* Layer Switcher */
-.layer-switcher {
-    top: 0.5em;
-    right: 0.5em;
-    background-color: rgba(255, 255, 255, 0.9) !important;
+.ol-layerswitcher {
+    right: 10px !important;
+    top: 100px !important;
+    max-height: calc(100vh - 180px) !important;
 }
 
-.layer-switcher button {
-    background-color: #2E7D32 !important;
-    color: white !important;
+/* Upload widget tooltip */
+.upload-tooltip {
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(46, 125, 50, 0.9);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    z-index: 2000;
+    display: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* Hide original measure control */
+.ol-measure {
+    display: none !important;
 }
 
 /* Popup Styles */

@@ -1,61 +1,85 @@
-# Chocó Alliance Web Map
+# The Chocó Alliance Web Map
 
-An interactive web mapping application for visualizing and managing data related to the Chocó Alliance project.
+An interactive web map application for visualizing and analyzing geographical data in the Chocó region.
+
+## Features
+
+- **Interactive Map Layers**: Multiple layers including terrestrial ecoregions, mining concessions, communities, indigenous reserves, and protected areas
+- **Base Maps**: OpenStreetMap, Google Satellite, and Google Terrain options
+- **Measurement Tools**: Measure distances and areas with accurate geodesic calculations
+- **Drawing Tools**: Create points, lines, polygons, and circles on the map
+- **Layer Swipe**: Compare two layers using a swipe interaction
+- **Export Capability**: Save the current map view as a PNG image
+- **Data Upload**: Drag and drop GeoJSON, KML, or GPX files onto the map
 
 ## Directory Structure
 
 ```
 Choco/
-├── js/                     # JavaScript files
-│   ├── config.js          # Central configuration file
-│   └── layers/            # Layer-specific JavaScript
-├── css/                   # Stylesheet files
-├── data/                  # Map data files
-├── styles/                # Layer styles
-├── resources/             # External resources and libraries
-└── components/           # Reusable HTML components
+├── css/
+│   └── main.css              # Custom styles for the application
+├── js/
+│   ├── widgets.js            # Widget functionality (measure, draw, swipe, etc.)
+│   ├── config.js             # Configuration settings
+│   ├── layerManager.js       # Layer management functionality
+│   └── styles/
+│       └── styleManager.js   # Layer styling definitions
+├── layers/                   # Layer data files
+│   ├── layers.js            # Layer configuration
+│   └── [layer_name].js      # Individual layer files
+├── resources/               # Third-party libraries and resources
+│   ├── ol.js               # OpenLayers library
+│   ├── ol.css              # OpenLayers styles
+│   └── [other_resources]   # Additional resources
+├── styles/                 # Layer style files
+│   └── [layer_name]_style.js
+├── index.html             # Main application file
+├── favicon.ico            # Website favicon
+└── Logo-Stacked.png      # Chocó Alliance logo
 ```
 
-## Adding New Layers
+## Usage
 
-1. Add your layer style file to the `styles/` directory
-2. Update the layer configuration in `js/config.js`:
-```javascript
-layers: [
-    {
-        id: "your_layer_id",
-        name: "Your Layer Name",
-        group: "your_group",
-        styleFile: "YourLayer_style.js",
-        visible: true,
-        opacity: 1
-    }
-]
-```
+1. **Layer Management**:
+   - Use the layer switcher on the right to toggle layers
+   - Organize layers by category (Base Maps, Protected Areas, etc.)
 
-## Updating Layer Styles
+2. **Measurement**:
+   - Click the ruler icon to activate measurement tool
+   - Choose between length and area measurement
+   - Click points to measure, double-click to finish
 
-1. Locate your layer's style file in the `styles/` directory
-2. Update the style properties as needed
-3. If creating new symbolization, follow the existing pattern:
-```javascript
-var style_layername = function(feature, resolution) {
-    // Your style definition here
-};
-```
+3. **Drawing**:
+   - Click the pencil icon to activate drawing tool
+   - Select shape type (point, line, polygon, circle)
+   - Click to draw, double-click to finish
 
-## Common Tasks
+4. **Layer Swipe**:
+   - Click the exchange icon to activate layer swipe
+   - Use the slider to compare layers
+   - Works with the topmost visible layer
 
-### Adding a New Protected Area
-1. Prepare your GeoJSON data
-2. Add the style file to `styles/`
-3. Update `js/config.js` with the new layer
-4. Add any necessary legend items
+5. **Export Map**:
+   - Click the download icon to save current view
+   - Map will be saved as PNG image
 
-### Updating Layer Visibility
-1. Modify the `visible` property in `js/config.js`
-2. Or use the layer switcher in the UI
+6. **Upload Data**:
+   - Click the upload icon for instructions
+   - Drag and drop supported files onto the map
+   - Supported formats: GeoJSON, KML, GPX
 
-## Contact
+## Development
 
-For questions or contributions, please contact  me at this addy a.y.ali@student.utwente.nl
+The application is built using:
+- OpenLayers 6.x
+- HTML5/CSS3
+- JavaScript (ES6+)
+- FontAwesome for icons
+
+## Credits
+
+Created by [AzyAli](https://nl.linkedin.com/in/abdulaziz-yusuf-ali) for The Chocó Alliance.
+
+## License
+
+Copyright 2025 The Chocó Alliance. All rights reserved.
