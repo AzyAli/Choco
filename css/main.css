@@ -44,9 +44,10 @@ body {
     height: 80px;
     background-color: #2E7D32;
     color: white;
-    position: absolute;
+    position: fixed;
     top: 0;
-    left: 0;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1000;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     text-align: center;
