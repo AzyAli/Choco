@@ -1,6 +1,6 @@
 # The Chocó Alliance Web Map
 
-An interactive web map application for visualizing and analyzing geographical data in the Chocó region.
+An interactive open-source web map application for visualizing and analyzing geographical data in the Chocó region.
 
 ## Features
 
