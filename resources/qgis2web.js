@@ -1,4 +1,3 @@
-
 var map = new ol.Map({
     target: 'map',
     renderer: 'canvas',
@@ -515,8 +514,8 @@ geolocation.setTracking(true);
 
 //measurement
 
-var measuring = false;
-var measureControl = (function (Control) {
+//var measuring = false;
+/*var measureControl = (function (Control) {
     measureControl = function(opt_options) {
 
       var options = opt_options || {};
@@ -896,7 +895,7 @@ var parentElement = document.querySelector(".measure-control");
 var elementToMove = document.getElementById("form_measure");
 if (elementToMove && parentElement) {
   parentElement.insertBefore(elementToMove, parentElement.firstChild);
-}
+}*/
 
 
 //geocoder
@@ -953,9 +952,9 @@ map.addControl(bottomAttribution);
 
 var attributionList = document.createElement('li');
 attributionList.innerHTML = `
-	<a href="https://github.com/AzyAli/Choco">ContributeHere</a> &middot;
-	<a href="https://openlayers.org/">OpenLayers</a> &middot;
-	<a href="https://qgis.org/">QGIS</a>	
+    <a href="https://github.com/AzyAli/Choco">Contribute</a> &middot;
+    <a href="https://openlayers.org/">OpenLayers</a> &middot;
+    <a href="https://qgis.org/">QGIS</a>	
 `;
 bottomAttribution.element.appendChild(attributionList);
 
@@ -992,10 +991,10 @@ document.addEventListener('DOMContentLoaded', function() {
         topLeftContainerDiv.appendChild(geolocateControl);
     }
     //measure
-    var measureControl = document.getElementsByClassName('measure-control')[0];
+    /*var measureControl = document.getElementsByClassName('measure-control')[0];
     if (measureControl) {
         topLeftContainerDiv.appendChild(measureControl);
-    }
+    }*/
     //geocoder
     var geocoderControl = document.getElementsByClassName('ol-geocoder')[0];
     if (geocoderControl) {
