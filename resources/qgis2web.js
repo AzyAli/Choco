@@ -953,7 +953,7 @@ map.addControl(bottomAttribution);
 
 var attributionList = document.createElement('li');
 attributionList.innerHTML = `
-	<a href="https://github.com/AzyAli/Choco">Contribute_here</a> &middot;
+	<a href="https://github.com/AzyAli/Choco">ContributeHere</a> &middot;
 	<a href="https://openlayers.org/">OpenLayers</a> &middot;
 	<a href="https://qgis.org/">QGIS</a>	
 `;
