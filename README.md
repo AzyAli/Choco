@@ -1,4 +1,5 @@
-# The Chocó Alliance Web Map
+# The Chocó Alliance Web Map [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.14811591.svg)](https://doi.org/10.5281/zenodo.14811591)
+
 
 An interactive open-source web map application for visualizing and analyzing geographical data in the Chocó region.
 
